@@ -1,5 +1,5 @@
-import { Service } from '../../service/models/service.model';
 import { Doctor } from '../../doctor/models/doctor.model';
+import { Clinic } from "../../clinic/models/clinic.model";
 import {
   BelongsTo,
   Column,
@@ -10,16 +10,15 @@ import {
   Table,
 } from 'sequelize-typescript';
 
-interface ClinicAttr {
+interface ServiceAttr {
   name:string
-	address:string
-	phone:string
-	image_name:string
+	price:string
+	clinic_id:number
 	
 }
 
-@Table({ tableName: 'clinic' })
-export class Clinic extends Model<Clinic, ClinicAttr> {
+@Table({ tableName: 'service' })
+export class Service extends Model<Service, ServiceAttr> {
   @Column({ type: DataType.INTEGER, autoIncrement: true, primaryKey: true })
   id: number;
 
@@ -27,16 +26,13 @@ export class Clinic extends Model<Clinic, ClinicAttr> {
 	name:string;
 
 	@Column({ type: DataType.STRING })
-	address:string;
+	price:string;
 
-	@Column({ type: DataType.STRING })
-	phone:string;
-
-	@Column({ type: DataType.STRING })
-	image_name:string;
-
-	@HasMany(() => Service)
-	service: Service[];
+	@ForeignKey(() => Clinic)
+	@Column({ type: DataType.INTEGER })
+	clinic_id: number;
+	@BelongsTo(() => Clinic)
+	clinic: Clinic[];
 
 	@HasMany(() => Doctor)
 	doctor: Doctor[];
