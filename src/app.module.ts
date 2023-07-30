@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { resolve } from 'path';
+import { ClinicModule } from './clinic/clinic.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { resolve } from 'path';
       },
       models: [],
     }),
+    ClinicModule,
   ],
   controllers: [],
   providers: [],
