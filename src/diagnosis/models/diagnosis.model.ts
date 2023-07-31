@@ -1,3 +1,4 @@
+import { Service } from '../../service/models/service.model';
 import {
   BelongsTo,
   Column,
@@ -9,8 +10,8 @@ import {
 } from 'sequelize-typescript';
 
 interface DiagnosisAttr {
-  name:string
-	
+  name: string;
+  service_id: number;
 }
 
 @Table({ tableName: 'diagnosis' })
@@ -19,7 +20,11 @@ export class Diagnosis extends Model<Diagnosis, DiagnosisAttr> {
   id: number;
 
   @Column({ type: DataType.STRING })
-	name:string;
+  name: string;
 
-	
+  @ForeignKey(() => Service)
+  @Column({ type: DataType.INTEGER })
+  service_id: number;
+  @BelongsTo(() => Service)
+  service: Service[];
 }

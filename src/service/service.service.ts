@@ -6,7 +6,7 @@ import { UpdateServiceDto } from './dto/update-service.dto';
 
 @Injectable()
 export class ServiceService {
-  constructor(@InjectModel(Service) private serviceRepo: typeof Service) { }
+  constructor(@InjectModel(Service) private serviceRepo: typeof Service) {}
 
   async create(createServiceDto: CreateServiceDto) {
     const res = await this.serviceRepo.create(createServiceDto);
@@ -14,7 +14,9 @@ export class ServiceService {
   }
 
   async findAll() {
-    return await this.serviceRepo.findAll({ include: { all: true, nested: true } });
+    return await this.serviceRepo.findAll({
+      include: { all: true, nested: true },
+    });
   }
 
   async findOne(id: number) {

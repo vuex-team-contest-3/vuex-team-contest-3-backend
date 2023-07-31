@@ -6,7 +6,7 @@ import { UpdateExampleDto } from './dto/update-example.dto';
 
 @Injectable()
 export class ExampleService {
-  constructor(@InjectModel(Example) private exampleRepo: typeof Example) { }
+  constructor(@InjectModel(Example) private exampleRepo: typeof Example) {}
 
   async create(createExampleDto: CreateExampleDto) {
     const res = await this.exampleRepo.create(createExampleDto);
@@ -14,7 +14,9 @@ export class ExampleService {
   }
 
   async findAll() {
-    return await this.exampleRepo.findAll({ include: { all: true, nested: true } });
+    return await this.exampleRepo.findAll({
+      include: { all: true, nested: true },
+    });
   }
 
   async findOne(id: number) {

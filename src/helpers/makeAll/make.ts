@@ -211,6 +211,7 @@ makeFiles(
   },
   {
     Doctor: 'doctor',
+    Diagnosis: 'diagnosis',
   },
 );
 
@@ -291,4 +292,9 @@ makeFiles('admin', 'Admin', {
 // DIAGNOSIS
 makeFiles('diagnosis', 'Diagnosis', {
   name: ['string', '{ type: DataType.STRING }'],
+  service_id: [
+    'number',
+    '{ type: DataType.INTEGER }',
+    { name: 'Service', column: 'service' },
+  ],
 });

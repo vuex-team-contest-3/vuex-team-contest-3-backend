@@ -6,7 +6,7 @@ import { UpdateQueueDto } from './dto/update-queue.dto';
 
 @Injectable()
 export class QueueService {
-  constructor(@InjectModel(Queue) private queueRepo: typeof Queue) { }
+  constructor(@InjectModel(Queue) private queueRepo: typeof Queue) {}
 
   async create(createQueueDto: CreateQueueDto) {
     const res = await this.queueRepo.create(createQueueDto);
@@ -14,7 +14,9 @@ export class QueueService {
   }
 
   async findAll() {
-    return await this.queueRepo.findAll({ include: { all: true, nested: true } });
+    return await this.queueRepo.findAll({
+      include: { all: true, nested: true },
+    });
   }
 
   async findOne(id: number) {

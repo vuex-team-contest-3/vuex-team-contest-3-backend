@@ -6,7 +6,7 @@ import { UpdateDiagnosisDto } from './dto/update-diagnosis.dto';
 
 @Injectable()
 export class DiagnosisService {
-  constructor(@InjectModel(Diagnosis) private diagnosisRepo: typeof Diagnosis) { }
+  constructor(@InjectModel(Diagnosis) private diagnosisRepo: typeof Diagnosis) {}
 
   async create(createDiagnosisDto: CreateDiagnosisDto) {
     const res = await this.diagnosisRepo.create(createDiagnosisDto);
@@ -14,7 +14,9 @@ export class DiagnosisService {
   }
 
   async findAll() {
-    return await this.diagnosisRepo.findAll({ include: { all: true, nested: true } });
+    return await this.diagnosisRepo.findAll({
+      include: { all: true, nested: true },
+    });
   }
 
   async findOne(id: number) {
