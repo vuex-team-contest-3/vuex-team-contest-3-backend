@@ -4,6 +4,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { resolve } from 'path';
 import { ClinicModule } from './clinic/clinic.module';
+import { Clinic } from './clinic/models/clinic.model';
 
 @Module({
   imports: [
@@ -30,7 +31,7 @@ import { ClinicModule } from './clinic/clinic.module';
           rejectUnauthorized: false,
         },
       },
-      models: [],
+      models: [Clinic],
     }),
     ClinicModule,
   ],
