@@ -6,7 +6,7 @@ import { ServiceService } from './service.service';
 import { Service } from './models/service.model';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Service]), JwtModule],
+  imports: [SequelizeModule.forFeature([Service])],
   controllers: [ServiceController],
   providers: [ServiceService],
 })

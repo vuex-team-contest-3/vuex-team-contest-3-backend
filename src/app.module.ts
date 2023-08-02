@@ -2,9 +2,21 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { resolve } from 'path';
 import { ClinicModule } from './clinic/clinic.module';
 import { Clinic } from './clinic/models/clinic.model';
+import { join } from 'path';
+import { ServiceModule } from './service/service.module';
+import { Service } from './service/models/service.model';
+import { Admin } from './admin/models/admin.model';
+import { Client } from './client/models/client.model';
+import { Diagnosis } from './diagnosis/models/diagnosis.model';
+import { Doctor } from './doctor/models/doctor.model';
+import { Queue } from './queue/models/queue.model';
+import { AdminModule } from './admin/admin.module';
+import { ClientModule } from './client/client.module';
+import { DiagnosisModule } from './diagnosis/diagnosis.module';
+import { DoctorModule } from './doctor/doctor.module';
+import { QueueModule } from './queue/queue.module';
 
 @Module({
   imports: [
@@ -13,7 +25,8 @@ import { Clinic } from './clinic/models/clinic.model';
       isGlobal: true,
     }),
     ServeStaticModule.forRoot({
-      rootPath: resolve(__dirname, 'static'),
+      rootPath: join(__dirname, '..', 'swagger-static'),
+      serveRoot: process.env.NODE_ENV === 'development' ? '/' : '/swagger',
     }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
@@ -31,9 +44,15 @@ import { Clinic } from './clinic/models/clinic.model';
           rejectUnauthorized: false,
         },
       },
-      models: [Clinic],
+      models: [Admin, Service, Client, Clinic, Diagnosis, Doctor, Queue],
     }),
+    AdminModule,
+    ServiceModule,
+    ClientModule,
     ClinicModule,
+    DiagnosisModule,
+    DoctorModule,
+    QueueModule,
   ],
   controllers: [],
   providers: [],

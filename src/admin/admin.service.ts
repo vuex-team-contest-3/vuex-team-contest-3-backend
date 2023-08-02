@@ -6,7 +6,7 @@ import { UpdateAdminDto } from './dto/update-admin.dto';
 
 @Injectable()
 export class AdminService {
-  constructor(@InjectModel(Admin) private adminRepo: typeof Admin) { }
+  constructor(@InjectModel(Admin) private adminRepo: typeof Admin) {}
 
   async create(createAdminDto: CreateAdminDto) {
     const res = await this.adminRepo.create(createAdminDto);
@@ -14,7 +14,9 @@ export class AdminService {
   }
 
   async findAll() {
-    return await this.adminRepo.findAll({ include: { all: true, nested: true } });
+    return await this.adminRepo.findAll({
+      include: { all: true, nested: true },
+    });
   }
 
   async findOne(id: number) {
