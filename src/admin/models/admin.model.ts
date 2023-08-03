@@ -1,17 +1,8 @@
-import {
-  BelongsTo,
-  Column,
-  DataType,
-  ForeignKey,
-  HasMany,
-  Model,
-  Table,
-} from 'sequelize-typescript';
+import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
 interface AdminAttr {
-  login:string
-	password:string
-	
+  login: string;
+  hashed_password: string;
 }
 
 @Table({ tableName: 'admin' })
@@ -20,10 +11,8 @@ export class Admin extends Model<Admin, AdminAttr> {
   id: number;
 
   @Column({ type: DataType.STRING })
-	login:string;
+  login: string;
 
-	@Column({ type: DataType.STRING })
-	password:string;
-
-	
+  @Column({ type: DataType.STRING })
+  hashed_password: string;
 }

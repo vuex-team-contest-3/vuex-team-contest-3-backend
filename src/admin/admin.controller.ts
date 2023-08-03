@@ -11,11 +11,18 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { AdminService } from './admin.service';
+import { LoginAdminDto } from './dto/login-admin.dto';
 
 @ApiTags('Admin')
 @Controller('admin')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
+
+  @ApiOperation({ summary: 'Login Admin' })
+  @Post('signin')
+  async login(@Body() loginAdminDto: LoginAdminDto) {
+    return this.adminService.login(loginAdminDto);
+  }
 
   @ApiOperation({ summary: 'Create a admin' })
   @Post()
