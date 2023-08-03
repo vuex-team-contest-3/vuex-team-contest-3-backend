@@ -31,12 +31,13 @@ export class Service extends Model<Service, ServiceAttr> {
   @ForeignKey(() => Clinic)
   @Column({ type: DataType.INTEGER })
   clinic_id: number;
-  @BelongsTo(() => Clinic)
-  clinic: Clinic[];
 
   @HasMany(() => Doctor)
   doctor: Doctor[];
 
   @HasMany(() => Diagnosis)
   diagnosis: Diagnosis[];
+
+  @BelongsTo(() => Clinic)
+  clinic: Clinic;
 }

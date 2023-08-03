@@ -1,3 +1,4 @@
+import { Queue } from '../../queue/models/queue.model';
 import { Service } from '../../service/models/service.model';
 import {
   BelongsTo,
@@ -25,6 +26,10 @@ export class Diagnosis extends Model<Diagnosis, DiagnosisAttr> {
   @ForeignKey(() => Service)
   @Column({ type: DataType.INTEGER })
   service_id: number;
+
+  @HasMany(() => Queue)
+  queue: Queue[];
+
   @BelongsTo(() => Service)
-  service: Service[];
+  service: Service;
 }

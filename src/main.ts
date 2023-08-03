@@ -16,7 +16,7 @@ const start = async () => {
       credentials: true,
     });
 
-    const PORT = process.env.PORT || 7000;
+    const PORT = process.env.PORT || 3001;
 
     app.setGlobalPrefix('api');
 
@@ -52,7 +52,7 @@ const start = async () => {
       next();
     });
     app.listen(PORT, () => {
-      console.log(`Server ${PORT} da yuguryapti...`);
+      console.log(`Port: ${PORT}. Server is running...`);
     });
     if (process.env.NODE_ENV === 'development') {
       const pathToSwaggerStaticFolder = resolve(

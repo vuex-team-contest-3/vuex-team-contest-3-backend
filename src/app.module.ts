@@ -3,12 +3,12 @@ import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ClinicModule } from './clinic/clinic.module';
+import { Clinic } from './clinic/models/clinic.model';
 import { join } from 'path';
 import { ServiceModule } from './service/service.module';
 import { Service } from './service/models/service.model';
 import { Admin } from './admin/models/admin.model';
 import { Client } from './client/models/client.model';
-import { Clinic } from './clinic/models/clinic.model';
 import { Diagnosis } from './diagnosis/models/diagnosis.model';
 import { Doctor } from './doctor/models/doctor.model';
 import { Queue } from './queue/models/queue.model';
@@ -36,7 +36,6 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.PG_USER,
       password: String(process.env.PG_PASSWORD),
       database: process.env.PG_DB,
-      models: [Admin, Service, Client, Clinic, Diagnosis, Doctor, Queue],
       autoLoadModels: true,
       logging: false,
       ssl: true,
@@ -46,6 +45,7 @@ import { AuthModule } from './auth/auth.module';
           rejectUnauthorized: false,
         },
       },
+      models: [Admin, Service, Client, Clinic, Diagnosis, Doctor, Queue],
     }),
     AuthModule,
     AdminModule,
