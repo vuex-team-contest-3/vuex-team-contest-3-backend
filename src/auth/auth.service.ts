@@ -20,7 +20,7 @@ export class AuthService {
   async adminLogin(loginDto: LoginDto, res: Response) {
     const { login, password } = loginDto;
     const user = await this.adminService.findByLogin(login);
-    if (!user || user.password != password) {
+    if (!user || user.hashed_password != password) {
       throw new HttpException(
         `Bunday admin mavjud emas`,
         HttpStatus.BAD_REQUEST,
