@@ -88,8 +88,8 @@ export class AuthService {
   async getToken(id: any, role: string) {
     const payload = { id: id, role: role };
     const accessToken = this.jwtService.signAsync(payload, {
-      secret: process.env.REFRESH_TOKEN_KEY,
-      expiresIn: process.env.ACCESS_TOKEN_TIME,
+      secret: process.env.TOKEN_KEY,
+      expiresIn: process.env.TOKEN_TIME,
     });
     return { token: accessToken };
   }
