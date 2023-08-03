@@ -23,6 +23,10 @@ export class AdminService {
     return await this.adminRepo.findByPk(id);
   }
 
+  async findByLogin(login: string) {
+    return await this.adminRepo.findOne({ where: { login: login } });
+  }
+
   async update(id: number, updateAdminDto: UpdateAdminDto) {
     return await this.adminRepo.update(updateAdminDto, {
       where: { id },

@@ -9,5 +9,6 @@ import { Client } from './models/client.model';
   imports: [SequelizeModule.forFeature([Client]), JwtModule],
   controllers: [ClientController],
   providers: [ClientService],
+  exports: [ClientService],
 })
 export class ClientModule {}

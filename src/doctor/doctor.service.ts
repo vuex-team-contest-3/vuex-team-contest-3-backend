@@ -23,6 +23,10 @@ export class DoctorService {
     return await this.doctorRepo.findByPk(id);
   }
 
+  async findByLogin(login: string) {
+    // return await this.doctorRepo.findOne({ where: { clinic: login } });
+  }
+
   async update(id: number, updateDoctorDto: UpdateDoctorDto) {
     return await this.doctorRepo.update(updateDoctorDto, {
       where: { id },

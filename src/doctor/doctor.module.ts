@@ -9,5 +9,6 @@ import { Doctor } from './models/doctor.model';
   imports: [SequelizeModule.forFeature([Doctor]), JwtModule],
   controllers: [DoctorController],
   providers: [DoctorService],
+  exports: [DoctorService],
 })
 export class DoctorModule {}

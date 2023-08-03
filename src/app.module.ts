@@ -17,6 +17,7 @@ import { ClientModule } from './client/client.module';
 import { DiagnosisModule } from './diagnosis/diagnosis.module';
 import { DoctorModule } from './doctor/doctor.module';
 import { QueueModule } from './queue/queue.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { QueueModule } from './queue/queue.module';
         },
       },
     }),
+    AuthModule,
     AdminModule,
     ServiceModule,
     ClientModule,

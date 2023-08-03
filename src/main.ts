@@ -36,7 +36,7 @@ const start = async () => {
         'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.js',
       ],
     });
-    app.use(cookieParser.default());
+    app.use(cookieParser());
     app.useGlobalPipes(new ValidationPipe());
 
     app.useGlobalPipes(new ValidationPipe());

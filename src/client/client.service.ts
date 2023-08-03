@@ -23,6 +23,10 @@ export class ClientService {
     return await this.clientRepo.findByPk(id);
   }
 
+  async findByLogin(login: string) {
+    return await this.clientRepo.findOne({ where: { first_name: login } });
+  }
+
   async update(id: number, updateClientDto: UpdateClientDto) {
     return await this.clientRepo.update(updateClientDto, {
       where: { id },
