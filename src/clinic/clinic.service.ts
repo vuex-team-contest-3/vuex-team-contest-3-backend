@@ -1,8 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Clinic } from './models/clinic.model';
 import { CreateClinicDto } from './dto/create-clinic.dto';
 import { UpdateClinicDto } from './dto/update-clinic.dto';
+import { Service } from '../service/models/service.model';
+import { Doctor } from '../doctor/models/doctor.model';
 
 @Injectable()
 export class ClinicService {
@@ -33,5 +40,42 @@ export class ClinicService {
   async delete(id: number): Promise<number> {
     const result = await this.clinicRepo.destroy({ where: { id } });
     return result;
+  }
+
+  async getOne(id: number) {
+    try {
+      const clinic = await this.clinicRepo.findOne({
+        where: { id },
+        attributes: ['id', 'name', 'address', 'phone', 'image_name'],
+        include: [
+          {
+            model: Service,
+            attributes: ['id', 'name', 'price'],
+          },
+          {
+            model: Doctor,
+            attributes: [
+              'id',
+              'first_name',
+              'last_name',
+              'phone',
+              'profession',
+              'experience',
+              'work_time',
+              'work_day',
+              'floor',
+              'room',
+              'image_name',
+            ],
+          },
+        ],
+      });
+      if (!clinic) {
+        throw new HttpException('Clinic not found', HttpStatus.NOT_FOUND);
+      }
+      return clinic;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 }

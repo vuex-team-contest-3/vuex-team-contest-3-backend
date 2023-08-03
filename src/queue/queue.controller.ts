@@ -5,7 +5,7 @@ import {
   Body,
   Param,
   Delete,
-  Put,
+  Patch
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { CreateQueueDto } from './dto/create-queue.dto';
@@ -36,7 +36,7 @@ export class QueueController {
   }
 
   @ApiOperation({ summary: 'Update queue' })
-  @Put(':id')
+  @Patch(':id')
   async update(
     @Param('id') id: number,
     @Body() updateQueueDto: UpdateQueueDto,

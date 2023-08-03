@@ -17,6 +17,7 @@ import { ClientModule } from './client/client.module';
 import { DiagnosisModule } from './diagnosis/diagnosis.module';
 import { DoctorModule } from './doctor/doctor.module';
 import { QueueModule } from './queue/queue.module';
+import { ImageModule } from './image/image.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { QueueModule } from './queue/queue.module';
     DiagnosisModule,
     DoctorModule,
     QueueModule,
+    ImageModule,
   ],
   controllers: [],
   providers: [],

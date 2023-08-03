@@ -5,7 +5,7 @@ import {
   Body,
   Param,
   Delete,
-  Put,
+  Patch
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { CreateClientDto } from './dto/create-client.dto';
@@ -36,7 +36,7 @@ export class ClientController {
   }
 
   @ApiOperation({ summary: 'Update client' })
-  @Put(':id')
+  @Patch(':id')
   async update(
     @Param('id') id: number,
     @Body() updateClientDto: UpdateClientDto,

@@ -5,7 +5,7 @@ import {
   Body,
   Param,
   Delete,
-  Put,
+  Patch
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { CreateDiagnosisDto } from './dto/create-diagnosis.dto';
@@ -36,7 +36,7 @@ export class DiagnosisController {
   }
 
   @ApiOperation({ summary: 'Update diagnosis' })
-  @Put(':id')
+  @Patch(':id')
   async update(
     @Param('id') id: number,
     @Body() updateDiagnosisDto: UpdateDiagnosisDto,

@@ -5,7 +5,7 @@ import {
   Body,
   Param,
   Delete,
-  Put,
+  Patch,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { CreateAdminDto } from './dto/create-admin.dto';
@@ -43,17 +43,17 @@ export class AdminController {
   }
 
   @ApiOperation({ summary: 'Update admin' })
-  @Put(':id')
+  @Patch(':id')
   async update(
     @Param('id') id: number,
     @Body() updateAdminDto: UpdateAdminDto,
   ) {
-    return await this.adminService.update(+id, updateAdminDto);
+    return this.adminService.update(+id, updateAdminDto);
   }
 
   @ApiOperation({ summary: 'Delete admin' })
   @Delete(':id')
-  async delete(@Param('id') id: number): Promise<number> {
-    return await this.adminService.delete(id);
+  async delete(@Param('id') id: number) {
+    return this.adminService.delete(id);
   }
 }
