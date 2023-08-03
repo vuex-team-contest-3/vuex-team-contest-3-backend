@@ -4,7 +4,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ClinicModule } from './clinic/clinic.module';
 import { Clinic } from './clinic/models/clinic.model';
-import { join } from 'path';
+import { join, resolve } from 'path';
 import { ServiceModule } from './service/service.module';
 import { Service } from './service/models/service.model';
 import { Admin } from './admin/models/admin.model';
@@ -27,8 +27,7 @@ import { AuthModule } from './auth/auth.module';
       isGlobal: true,
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'swagger-static'),
-      serveRoot: process.env.NODE_ENV === 'development' ? '/' : '/swagger',
+      rootPath: resolve(__dirname, 'static'),
     }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
