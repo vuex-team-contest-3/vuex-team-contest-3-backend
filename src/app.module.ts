@@ -18,6 +18,7 @@ import { DiagnosisModule } from './diagnosis/diagnosis.module';
 import { DoctorModule } from './doctor/doctor.module';
 import { QueueModule } from './queue/queue.module';
 import { ImageModule } from './image/image.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { ImageModule } from './image/image.module';
       },
       models: [Admin, Service, Client, Clinic, Diagnosis, Doctor, Queue],
     }),
+    AuthModule,
     AdminModule,
     ServiceModule,
     ClientModule,

@@ -258,6 +258,7 @@ export class DoctorService {
         id: doctor.id,
         login: doctor.clinic_id,
         phone: doctor.phone,
+        role: 'DOCTOR',
       };
       const token = await this.jwtService.signAsync(jwtPayload, {
         secret: process.env.TOKEN_KEY,

@@ -63,6 +63,10 @@ export class AdminService {
     return this.getOne(id);
   }
 
+  async findByLogin(login: string) {
+    return await this.adminRepo.findOne({ where: { login: login } });
+  }
+
   async update(id: number, updateAdminDto: UpdateAdminDto) {
     await this.getOne(id);
 
@@ -122,6 +126,7 @@ export class AdminService {
       const jwtPayload = {
         id: admin.id,
         login: admin.login,
+        role: 'ADMIN',
       };
       const token = await this.jwtService.signAsync(jwtPayload, {
         secret: process.env.TOKEN_KEY,
