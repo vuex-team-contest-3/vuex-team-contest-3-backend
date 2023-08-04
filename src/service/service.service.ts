@@ -76,7 +76,7 @@ export class ServiceService {
         ],
       });
       if (!service) {
-        throw new HttpException('service not found', HttpStatus.NOT_FOUND);
+        throw new HttpException('Service not found', HttpStatus.NOT_FOUND);
       }
       return service;
     } catch (error) {

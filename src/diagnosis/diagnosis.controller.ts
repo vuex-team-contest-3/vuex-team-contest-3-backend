@@ -5,7 +5,7 @@ import {
   Body,
   Param,
   Delete,
-  Patch
+  Patch,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { CreateDiagnosisDto } from './dto/create-diagnosis.dto';
@@ -19,19 +19,19 @@ export class DiagnosisController {
 
   @ApiOperation({ summary: 'Create a diagnosis' })
   @Post()
-  create(@Body() createDiagnosisDto: CreateDiagnosisDto) {
+  async create(@Body() createDiagnosisDto: CreateDiagnosisDto) {
     return this.diagnosisService.create(createDiagnosisDto);
   }
 
   @ApiOperation({ summary: 'Get all diagnosis' })
   @Get()
-  findAll() {
+  async findAll() {
     return this.diagnosisService.findAll();
   }
 
   @ApiOperation({ summary: 'Get diagnosis' })
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  async findOne(@Param('id') id: number) {
     return this.diagnosisService.findOne(+id);
   }
 
@@ -41,12 +41,12 @@ export class DiagnosisController {
     @Param('id') id: number,
     @Body() updateDiagnosisDto: UpdateDiagnosisDto,
   ) {
-    return await this.diagnosisService.update(+id, updateDiagnosisDto);
+    return this.diagnosisService.update(+id, updateDiagnosisDto);
   }
 
   @ApiOperation({ summary: 'Delete diagnosis' })
   @Delete(':id')
-  async delete(@Param('id') id: number): Promise<number> {
-    return await this.diagnosisService.delete(id);
+  async delete(@Param('id') id: number) {
+    return this.diagnosisService.delete(id);
   }
 }
