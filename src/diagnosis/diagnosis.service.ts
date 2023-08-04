@@ -44,7 +44,6 @@ export class DiagnosisService {
     await this.getOne(id);
     await this.diagnosisRepo.update(updateDiagnosisDto, {
       where: { id },
-      returning: true,
     });
     return this.getOne(id);
   }

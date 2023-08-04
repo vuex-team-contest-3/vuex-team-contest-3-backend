@@ -1,9 +1,4 @@
-import {
-  BadRequestException,
-  HttpException,
-  HttpStatus,
-  Injectable,
-} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Queue } from './models/queue.model';
 import { CreateQueueDto } from './dto/create-queue.dto';
@@ -13,15 +8,24 @@ import { Client } from '../client/models/client.model';
 import { Diagnosis } from '../diagnosis/models/diagnosis.model';
 import { Doctor } from '../doctor/models/doctor.model';
 import { ImageService } from '../image/image.service';
+import { ClientService } from './../client/client.service';
+import { DoctorService } from './../doctor/doctor.service';
+import { DiagnosisService } from './../diagnosis/diagnosis.service';
 
 @Injectable()
 export class QueueService {
   constructor(
     @InjectModel(Queue) private queueRepo: typeof Queue,
+    private readonly clientService: ClientService,
+    private readonly doctorService: DoctorService,
+    private readonly diagnosisService: DiagnosisService,
     private readonly imageService: ImageService,
   ) {}
 
   async create(createQueueDto: CreateQueueDto) {
+    await this.clientService.getOne(createQueueDto.client_id);
+    await this.doctorService.getOne(createQueueDto.doctor_id);
+
     const queue = await this.queueRepo.create({
       is_active: true,
       ...createQueueDto,
@@ -121,6 +125,10 @@ export class QueueService {
     image: Express.Multer.File,
   ) {
     const queue = await this.getOne(id);
+
+    if (updateQueueDto.diagnosis_id) {
+      await this.diagnosisService.getOne(updateQueueDto.diagnosis_id);
+    }
 
     if (image) {
       if (queue.image_name) {

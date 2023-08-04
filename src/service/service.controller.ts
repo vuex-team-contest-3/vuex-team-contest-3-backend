@@ -41,12 +41,12 @@ export class ServiceController {
     @Param('id') id: number,
     @Body() updateServiceDto: UpdateServiceDto,
   ) {
-    return await this.serviceService.update(+id, updateServiceDto);
+    return this.serviceService.update(+id, updateServiceDto);
   }
 
   @ApiOperation({ summary: 'Delete service' })
   @Delete(':id')
-  async delete(@Param('id') id: number): Promise<number> {
-    return await this.serviceService.delete(id);
+  async delete(@Param('id') id: number) {
+    return this.serviceService.delete(id);
   }
 }

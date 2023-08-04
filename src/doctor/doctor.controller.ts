@@ -99,7 +99,7 @@ export class DoctorController {
   })
   @Post()
   @UseInterceptors(FileInterceptor('image'))
-  create(
+  async create(
     @Body() createDoctorDto: CreateDoctorDto,
     @UploadedFile(new ImageValidationPipe()) image: Express.Multer.File,
   ) {
@@ -108,13 +108,13 @@ export class DoctorController {
 
   @ApiOperation({ summary: 'Get all doctor' })
   @Get()
-  findAll() {
+  async findAll() {
     return this.doctorService.findAll();
   }
 
   @ApiOperation({ summary: 'Get doctor' })
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  async findOne(@Param('id') id: number) {
     return this.doctorService.findOne(+id);
   }
 

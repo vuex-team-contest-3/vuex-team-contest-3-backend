@@ -48,12 +48,12 @@ export class ClientController {
     @Param('id') id: number,
     @Body() updateClientDto: UpdateClientDto,
   ) {
-    return await this.clientService.update(+id, updateClientDto);
+    return this.clientService.update(+id, updateClientDto);
   }
 
   @ApiOperation({ summary: 'Delete client' })
   @Delete(':id')
   async delete(@Param('id') id: number) {
-    return await this.clientService.delete(id);
+    return this.clientService.delete(id);
   }
 }

@@ -81,12 +81,4 @@ export class UpdateDoctorDto {
   @IsOptional()
   @IsNumberString()
   service_id?: number;
-
-  @ApiProperty({
-    example: 4,
-    description: 'The clinic ID of the Doctor',
-  })
-  @IsOptional()
-  @IsNumberString()
-  clinic_id?: number;
 }

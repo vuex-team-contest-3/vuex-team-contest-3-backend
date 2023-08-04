@@ -13,7 +13,6 @@ import { LoginDoctorDto } from './dto/login-doctor.dto';
 import { Service } from '../service/models/service.model';
 import { Clinic } from '../clinic/models/clinic.model';
 import { JwtService } from '@nestjs/jwt';
-import { compare } from 'bcryptjs';
 import { ImageService } from '../image/image.service';
 import { ClinicService } from './../clinic/clinic.service';
 import { ServiceService } from './../service/service.service';
@@ -105,9 +104,6 @@ export class DoctorService {
     image: Express.Multer.File,
   ) {
     const doctor = await this.getOne(id);
-    if (updateDoctorDto.clinic_id) {
-      await this.clinicService.getOne(updateDoctorDto.clinic_id);
-    }
 
     if (updateDoctorDto.service_id) {
       await this.serviceService.getOne(updateDoctorDto.service_id);
