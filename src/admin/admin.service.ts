@@ -26,7 +26,6 @@ export class AdminService {
     if (!adminByLogin) {
       throw new UnauthorizedException('Login or password is wrong');
     }
-    console.log(password, adminByLogin.hashed_password);
     const isMatchPass = await compare(password, adminByLogin.hashed_password);
     if (!isMatchPass) {
       throw new UnauthorizedException('Login or password is wrong');
@@ -63,10 +62,6 @@ export class AdminService {
     return this.getOne(id);
   }
 
-  async findByLogin(login: string) {
-    return await this.adminRepo.findOne({ where: { login: login } });
-  }
-
   async update(id: number, updateAdminDto: UpdateAdminDto) {
     await this.getOne(id);
 
@@ -95,30 +90,22 @@ export class AdminService {
   }
 
   async getOne(id: number) {
-    try {
-      const admin = await this.adminRepo.findOne({
-        where: { id },
-        attributes: ['id', 'login'],
-      });
-      if (!admin) {
-        throw new HttpException('Admin not found', HttpStatus.NOT_FOUND);
-      }
-      return admin;
-    } catch (error) {
-      throw new BadRequestException(error.message);
+    const admin = await this.adminRepo.findOne({
+      where: { id },
+      attributes: ['id', 'login'],
+    });
+    if (!admin) {
+      throw new HttpException('Admin not found', HttpStatus.NOT_FOUND);
     }
+    return admin;
   }
 
   async getAdminByLogin(login: string) {
-    try {
-      const admin = await this.adminRepo.findOne({
-        where: { login },
-        attributes: ['id', 'login', 'hashed_password'],
-      });
-      return admin;
-    } catch (error) {
-      throw new BadRequestException(error.message);
-    }
+    const admin = await this.adminRepo.findOne({
+      where: { login },
+      attributes: ['id', 'login', 'hashed_password'],
+    });
+    return admin;
   }
 
   async getToken(admin: Admin) {

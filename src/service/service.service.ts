@@ -70,43 +70,39 @@ export class ServiceService {
   }
 
   async getOne(id: number) {
-    try {
-      const service = await this.serviceRepo.findOne({
-        where: { id },
-        attributes: ['id', 'name', 'price'],
-        include: [
-          {
-            model: Clinic,
-            attributes: ['id', 'name', 'address', 'phone', 'image_name'],
-          },
-          {
-            model: Diagnosis,
-            attributes: ['id', 'name'],
-          },
-          {
-            model: Doctor,
-            attributes: [
-              'id',
-              'first_name',
-              'last_name',
-              'phone',
-              'profession',
-              'experience',
-              'work_time',
-              'work_day',
-              'floor',
-              'room',
-              'image_name',
-            ],
-          },
-        ],
-      });
-      if (!service) {
-        throw new HttpException('Service not found', HttpStatus.NOT_FOUND);
-      }
-      return service;
-    } catch (error) {
-      throw new BadRequestException(error.message);
+    const service = await this.serviceRepo.findOne({
+      where: { id },
+      attributes: ['id', 'name', 'price'],
+      include: [
+        {
+          model: Clinic,
+          attributes: ['id', 'name', 'address', 'phone', 'image_name'],
+        },
+        {
+          model: Diagnosis,
+          attributes: ['id', 'name'],
+        },
+        {
+          model: Doctor,
+          attributes: [
+            'id',
+            'first_name',
+            'last_name',
+            'phone',
+            'profession',
+            'experience',
+            'work_time',
+            'work_day',
+            'floor',
+            'room',
+            'image_name',
+          ],
+        },
+      ],
+    });
+    if (!service) {
+      throw new HttpException('Service not found', HttpStatus.NOT_FOUND);
     }
+    return service;
   }
 }

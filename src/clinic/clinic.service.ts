@@ -113,85 +113,77 @@ export class ClinicService {
   }
 
   async getOne(id: number) {
-    try {
-      const clinic = await this.clinicRepo.findOne({
-        where: { id },
-        attributes: ['id', 'name', 'address', 'phone', 'image_name'],
-        include: [
-          {
-            model: Service,
-            attributes: ['id', 'name', 'price'],
-            include: [
-              {
-                model: Diagnosis,
-                attributes: ['id', 'name'],
-              },
-            ],
-          },
-          {
-            model: Doctor,
-            attributes: [
-              'id',
-              'first_name',
-              'last_name',
-              'phone',
-              'profession',
-              'experience',
-              'work_time',
-              'work_day',
-              'floor',
-              'room',
-              'image_name',
-            ],
-          },
-        ],
-      });
-      if (!clinic) {
-        throw new HttpException('Clinic not found', HttpStatus.NOT_FOUND);
-      }
-      return clinic;
-    } catch (error) {
-      throw new BadRequestException(error.message);
+    const clinic = await this.clinicRepo.findOne({
+      where: { id },
+      attributes: ['id', 'name', 'address', 'phone', 'image_name'],
+      include: [
+        {
+          model: Service,
+          attributes: ['id', 'name', 'price'],
+          include: [
+            {
+              model: Diagnosis,
+              attributes: ['id', 'name'],
+            },
+          ],
+        },
+        {
+          model: Doctor,
+          attributes: [
+            'id',
+            'first_name',
+            'last_name',
+            'phone',
+            'profession',
+            'experience',
+            'work_time',
+            'work_day',
+            'floor',
+            'room',
+            'image_name',
+          ],
+        },
+      ],
+    });
+    if (!clinic) {
+      throw new HttpException('Clinic not found', HttpStatus.NOT_FOUND);
     }
+    return clinic;
   }
 
   async getClinicByPhone(phone: string) {
-    try {
-      const clinic = await this.clinicRepo.findOne({
-        where: { phone },
-        attributes: ['id', 'name', 'address', 'phone', 'image_name'],
-        include: [
-          {
-            model: Service,
-            attributes: ['id', 'name', 'price'],
-            include: [
-              {
-                model: Diagnosis,
-                attributes: ['id', 'name'],
-              },
-            ],
-          },
-          {
-            model: Doctor,
-            attributes: [
-              'id',
-              'first_name',
-              'last_name',
-              'phone',
-              'profession',
-              'experience',
-              'work_time',
-              'work_day',
-              'floor',
-              'room',
-              'image_name',
-            ],
-          },
-        ],
-      });
-      return clinic;
-    } catch (error) {
-      throw new BadRequestException(error.message);
-    }
+    const clinic = await this.clinicRepo.findOne({
+      where: { phone },
+      attributes: ['id', 'name', 'address', 'phone', 'image_name'],
+      include: [
+        {
+          model: Service,
+          attributes: ['id', 'name', 'price'],
+          include: [
+            {
+              model: Diagnosis,
+              attributes: ['id', 'name'],
+            },
+          ],
+        },
+        {
+          model: Doctor,
+          attributes: [
+            'id',
+            'first_name',
+            'last_name',
+            'phone',
+            'profession',
+            'experience',
+            'work_time',
+            'work_day',
+            'floor',
+            'room',
+            'image_name',
+          ],
+        },
+      ],
+    });
+    return clinic;
   }
 }

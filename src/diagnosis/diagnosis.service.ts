@@ -56,23 +56,19 @@ export class DiagnosisService {
   }
 
   async getOne(id: number) {
-    try {
-      const diagnosis = await this.diagnosisRepo.findOne({
-        where: { id },
-        attributes: ['id', 'name'],
-        include: [
-          {
-            model: Service,
-            attributes: ['id', 'name', 'price'],
-          },
-        ],
-      });
-      if (!diagnosis) {
-        throw new HttpException('Diagnosis not found', HttpStatus.NOT_FOUND);
-      }
-      return diagnosis;
-    } catch (error) {
-      throw new BadRequestException(error.message);
+    const diagnosis = await this.diagnosisRepo.findOne({
+      where: { id },
+      attributes: ['id', 'name'],
+      include: [
+        {
+          model: Service,
+          attributes: ['id', 'name', 'price'],
+        },
+      ],
+    });
+    if (!diagnosis) {
+      throw new HttpException('Diagnosis not found', HttpStatus.NOT_FOUND);
     }
+    return diagnosis;
   }
 }

@@ -5,33 +5,40 @@ import {
   Body,
   Param,
   Delete,
-  Patch
+  Patch,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { ClientService } from './client.service';
+import { LoginClientDto } from './dto/login-client.dto';
 
 @ApiTags('Client')
 @Controller('client')
 export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
+  @ApiOperation({ summary: 'Login Clint' })
+  @Post('signin')
+  async login(@Body() loginClintDto: LoginClientDto) {
+    return this.clientService.login(loginClintDto);
+  }
+
   @ApiOperation({ summary: 'Create a client' })
   @Post()
-  create(@Body() createClientDto: CreateClientDto) {
+  async create(@Body() createClientDto: CreateClientDto) {
     return this.clientService.create(createClientDto);
   }
 
   @ApiOperation({ summary: 'Get all client' })
   @Get()
-  findAll() {
+  async findAll() {
     return this.clientService.findAll();
   }
 
   @ApiOperation({ summary: 'Get client' })
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  async findOne(@Param('id') id: number) {
     return this.clientService.findOne(+id);
   }
 
@@ -46,7 +53,7 @@ export class ClientController {
 
   @ApiOperation({ summary: 'Delete client' })
   @Delete(':id')
-  async delete(@Param('id') id: number): Promise<number> {
+  async delete(@Param('id') id: number) {
     return await this.clientService.delete(id);
   }
 }

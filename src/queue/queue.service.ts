@@ -147,50 +147,46 @@ export class QueueService {
   }
 
   async getOne(id: number) {
-    try {
-      const queue = await this.queueRepo.findOne({
-        where: { id },
-        attributes: [
-          'id',
-          'is_active',
-          'started_at',
-          'finished_at',
-          'image_name',
-          'createdAt',
-        ],
-        include: [
-          {
-            model: Client,
-            attributes: ['id', 'first_name', 'last_name', 'age', 'phone'],
-          },
-          {
-            model: Diagnosis,
-            attributes: ['id', 'name'],
-          },
-          {
-            model: Doctor,
-            attributes: [
-              'id',
-              'first_name',
-              'last_name',
-              'phone',
-              'profession',
-              'experience',
-              'work_time',
-              'work_day',
-              'floor',
-              'room',
-              'image_name',
-            ],
-          },
-        ],
-      });
-      if (!queue) {
-        throw new HttpException('Queue not found', HttpStatus.NOT_FOUND);
-      }
-      return queue;
-    } catch (error) {
-      throw new BadRequestException(error.message);
+    const queue = await this.queueRepo.findOne({
+      where: { id },
+      attributes: [
+        'id',
+        'is_active',
+        'started_at',
+        'finished_at',
+        'image_name',
+        'createdAt',
+      ],
+      include: [
+        {
+          model: Client,
+          attributes: ['id', 'first_name', 'last_name', 'age', 'phone'],
+        },
+        {
+          model: Diagnosis,
+          attributes: ['id', 'name'],
+        },
+        {
+          model: Doctor,
+          attributes: [
+            'id',
+            'first_name',
+            'last_name',
+            'phone',
+            'profession',
+            'experience',
+            'work_time',
+            'work_day',
+            'floor',
+            'room',
+            'image_name',
+          ],
+        },
+      ],
+    });
+    if (!queue) {
+      throw new HttpException('Queue not found', HttpStatus.NOT_FOUND);
     }
+    return queue;
   }
 }

@@ -1,15 +1,7 @@
-import {
-  Controller,
-  Post,
-  Body,
-  HttpCode,
-  Res,
-  Headers,
-  Get,
-} from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, Res, Headers } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login-user.dto';
-import { ApiTags, ApiOperation, ApiProperty } from '@nestjs/swagger';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { Response } from 'express';
 import { CreateClientDto } from '../client/dto/create-client.dto';
 import { LoginAdminDto } from '../admin/dto/login-admin.dto';

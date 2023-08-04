@@ -29,27 +29,23 @@ export class DoctorService {
   ) {}
 
   async login(loginDoctorDto: LoginDoctorDto) {
-    try {
-      const { login, password } = loginDoctorDto;
-      const doctorByPhone = await this.getDoctorByPhone(password);
+    const { login, password } = loginDoctorDto;
+    const doctorByPhone = await this.getDoctorByPhone(password);
 
-      if (!doctorByPhone) {
-        throw new UnauthorizedException('Login or password is wrong');
-      }
-
-      if (doctorByPhone.clinic.id != login) {
-        throw new UnauthorizedException('Login or password is wrong');
-      }
-      const token = await this.getToken(doctorByPhone);
-      const doctor = await this.getOne(doctorByPhone.id);
-      const response = {
-        token,
-        doctor,
-      };
-      return response;
-    } catch (error) {
-      throw new BadRequestException(error.message);
+    if (!doctorByPhone) {
+      throw new UnauthorizedException('Login or password is wrong');
     }
+
+    if (doctorByPhone.clinic.id != login) {
+      throw new UnauthorizedException('Login or password is wrong');
+    }
+    const token = await this.getToken(doctorByPhone);
+    const doctor = await this.getOne(doctorByPhone.id);
+    const response = {
+      token,
+      doctor,
+    };
+    return response;
   }
 
   async create(createDoctorDto: CreateDoctorDto, image: Express.Multer.File) {
@@ -149,108 +145,96 @@ export class DoctorService {
   }
 
   async getOne(id: number) {
-    try {
-      const doctor = await this.doctorRepo.findOne({
-        where: { id },
-        attributes: [
-          'id',
-          'first_name',
-          'last_name',
-          'phone',
-          'profession',
-          'experience',
-          'work_time',
-          'work_day',
-          'floor',
-          'room',
-          'image_name',
-        ],
-        include: [
-          {
-            model: Service,
-            attributes: ['id', 'name', 'price'],
-          },
-          {
-            model: Clinic,
-            attributes: ['id', 'name', 'address', 'phone', 'image_name'],
-          },
-        ],
-      });
-      if (!doctor) {
-        throw new HttpException('Doctor not found', HttpStatus.NOT_FOUND);
-      }
-      return doctor;
-    } catch (error) {
-      throw new BadRequestException(error.message);
+    const doctor = await this.doctorRepo.findOne({
+      where: { id },
+      attributes: [
+        'id',
+        'first_name',
+        'last_name',
+        'phone',
+        'profession',
+        'experience',
+        'work_time',
+        'work_day',
+        'floor',
+        'room',
+        'image_name',
+      ],
+      include: [
+        {
+          model: Service,
+          attributes: ['id', 'name', 'price'],
+        },
+        {
+          model: Clinic,
+          attributes: ['id', 'name', 'address', 'phone', 'image_name'],
+        },
+      ],
+    });
+    if (!doctor) {
+      throw new HttpException('Doctor not found', HttpStatus.NOT_FOUND);
     }
+    return doctor;
   }
 
   async getDoctorByLogin(login: number) {
-    try {
-      const doctor = await this.doctorRepo.findOne({
-        where: { clinic_id: login },
-        attributes: [
-          'id',
-          'first_name',
-          'last_name',
-          'phone',
-          'profession',
-          'experience',
-          'work_time',
-          'work_day',
-          'floor',
-          'room',
-          'image_name',
-        ],
-        include: [
-          {
-            model: Service,
-            attributes: ['id', 'name', 'price'],
-          },
-          {
-            model: Clinic,
-            attributes: ['id', 'name', 'address', 'phone', 'image_name'],
-          },
-        ],
-      });
-      return doctor;
-    } catch (error) {
-      throw new BadRequestException(error.message);
-    }
+    const doctor = await this.doctorRepo.findOne({
+      where: { clinic_id: login },
+      attributes: [
+        'id',
+        'first_name',
+        'last_name',
+        'phone',
+        'profession',
+        'experience',
+        'work_time',
+        'work_day',
+        'floor',
+        'room',
+        'image_name',
+      ],
+      include: [
+        {
+          model: Service,
+          attributes: ['id', 'name', 'price'],
+        },
+        {
+          model: Clinic,
+          attributes: ['id', 'name', 'address', 'phone', 'image_name'],
+        },
+      ],
+    });
+    return doctor;
   }
 
   async getDoctorByPhone(phone: string) {
-    try {
-      const doctor = await this.doctorRepo.findOne({
-        where: { phone },
-        attributes: [
-          'id',
-          'first_name',
-          'last_name',
-          'phone',
-          'profession',
-          'experience',
-          'work_time',
-          'work_day',
-          'floor',
-          'room',
-          'image_name',
-        ],
-        include: [
-          {
-            model: Service,
-            attributes: ['id', 'name', 'price'],
-          },
-          {
-            model: Clinic,
-            attributes: ['id', 'name', 'address', 'phone', 'image_name'],
-          },
-        ],
-      });
-      return doctor;
-    } catch (error) {
-      throw new BadRequestException(error.message);
-    }
+    const doctor = await this.doctorRepo.findOne({
+      where: { phone },
+      attributes: [
+        'id',
+        'first_name',
+        'last_name',
+        'phone',
+        'profession',
+        'experience',
+        'work_time',
+        'work_day',
+        'floor',
+        'room',
+        'image_name',
+      ],
+      include: [
+        {
+          model: Service,
+          attributes: ['id', 'name', 'price'],
+        },
+        {
+          model: Clinic,
+          attributes: ['id', 'name', 'address', 'phone', 'image_name'],
+        },
+      ],
+    });
+    return doctor;
   }
 
   async getToken(doctor: Doctor) {

@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   HttpException,
   HttpStatus,
   Injectable,
@@ -31,7 +30,6 @@ export class AuthService {
     if (!adminByLogin) {
       throw new UnauthorizedException('Login or password is wrong');
     }
-    console.log(password, adminByLogin.hashed_password);
     const isMatchPass = await compare(password, adminByLogin.hashed_password);
     if (!isMatchPass) {
       throw new UnauthorizedException('Login or password is wrong');
@@ -75,7 +73,7 @@ export class AuthService {
 
   async userLogin(loginDto: LoginDto, res: Response) {
     const { login, password } = loginDto;
-    const user = await this.clientService.findByLogin(login);
+    const user = await this.clientService.getClientByLogin(login);
     if (!user || user.phone != password) {
       throw new HttpException(
         `Bunday foydalanuvchi mavjud emas`,
