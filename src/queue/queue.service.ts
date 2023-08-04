@@ -32,7 +32,7 @@ export class QueueService {
       include: [
         {
           model: Client,
-          attributes: ['id', 'fisrt_name', 'last_name', 'age', 'phone'],
+          attributes: ['id', 'first_name', 'last_name', 'age', 'phone'],
         },
         {
           model: Diagnosis,
@@ -75,7 +75,7 @@ export class QueueService {
       include: [
         {
           model: Client,
-          attributes: ['id', 'fisrt_name', 'last_name', 'age', 'phone'],
+          attributes: ['id', 'first_name', 'last_name', 'age', 'phone'],
         },
         {
           model: Diagnosis,
