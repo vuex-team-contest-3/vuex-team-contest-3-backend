@@ -56,7 +56,7 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Verify Token' })
-  @Post()
+  @Post('token')
   async verifyToken(@Body() authHeader: TokenDto) {
     return this.authService.verifyToken(authHeader.token);
   }
