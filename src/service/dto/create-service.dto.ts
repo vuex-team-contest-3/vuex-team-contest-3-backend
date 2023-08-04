@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateServiceDto {
   @ApiProperty({
@@ -23,6 +23,6 @@ export class CreateServiceDto {
     description: 'The clinic ID of the Service',
   })
   @IsNotEmpty()
-  @IsString()
+  @IsNumber()
   clinic_id: number;
 }

@@ -12,7 +12,8 @@ import {
 
 interface QueueAttr {
   is_active: boolean;
-  spent_time: string;
+  started_at: string;
+  finished_at: string;
   image_name: string;
   client_id: number;
   doctor_id: number;
@@ -27,8 +28,11 @@ export class Queue extends Model<Queue, QueueAttr> {
   @Column({ type: DataType.BOOLEAN })
   is_active: boolean;
 
-  @Column({ type: DataType.STRING })
-  spent_time: string;
+  @Column({ type: DataType.DATE })
+  started_at: string;
+
+  @Column({ type: DataType.DATE })
+  finished_at: string;
 
   @Column({ type: DataType.STRING })
   image_name: string;

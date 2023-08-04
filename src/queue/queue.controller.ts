@@ -5,7 +5,7 @@ import {
   Body,
   Param,
   Delete,
-  Patch
+  Patch,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { CreateQueueDto } from './dto/create-queue.dto';
@@ -27,6 +27,12 @@ export class QueueController {
   @Get()
   findAll() {
     return this.queueService.findAll();
+  }
+
+  @ApiOperation({ summary: 'Get all queue' })
+  @Get('today/:doctor_id')
+  findAllToday(@Param('doctor_id') doctor_id: number) {
+    return this.queueService.findAllToday(+doctor_id);
   }
 
   @ApiOperation({ summary: 'Get queue' })
