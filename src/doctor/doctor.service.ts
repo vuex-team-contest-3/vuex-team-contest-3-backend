@@ -31,16 +31,18 @@ export class DoctorService {
   async login(loginDoctorDto: LoginDoctorDto) {
     try {
       const { login, password } = loginDoctorDto;
-      const doctorByLogin = await this.getDoctorByLogin(login);
-      if (!doctorByLogin) {
+      const doctorByPhone = await this.getDoctorByPhone(password);
+      console.log(doctorByPhone, password);
+      
+      if (!doctorByPhone) {
         throw new UnauthorizedException('Login or password is wrong');
       }
-      const isMatchPass = await compare(password, doctorByLogin.phone);
-      if (!isMatchPass) {
+
+      if (doctorByPhone.clinic.id != login) {
         throw new UnauthorizedException('Login or password is wrong');
       }
-      const token = await this.getToken(doctorByLogin);
-      const doctor = await this.getOne(doctorByLogin.id);
+      const token = await this.getToken(doctorByPhone);
+      const doctor = await this.getOne(doctorByPhone.id);
       const response = {
         token,
         doctor,
