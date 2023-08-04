@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsNumberString } from 'class-validator';
 
 export class CreateQueueDto {
   @ApiProperty({
@@ -7,7 +7,7 @@ export class CreateQueueDto {
     description: 'The client ID of the Queue',
   })
   @IsNotEmpty()
-  @IsNumber()
+  @IsNumberString()
   client_id: number;
 
   @ApiProperty({
@@ -15,6 +15,6 @@ export class CreateQueueDto {
     description: 'The doctor ID of the Queue',
   })
   @IsNotEmpty()
-  @IsNumber()
+  @IsNumberString()
   doctor_id: number;
 }

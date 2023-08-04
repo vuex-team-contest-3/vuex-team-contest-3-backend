@@ -6,11 +6,15 @@ import {
   Param,
   Delete,
   Patch,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiConsumes, ApiBody } from '@nestjs/swagger';
 import { CreateQueueDto } from './dto/create-queue.dto';
 import { UpdateQueueDto } from './dto/update-queue.dto';
 import { QueueService } from './queue.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ImageValidationPipe } from '../pipes/image-validation.pipe';
 
 @ApiTags('Queue')
 @Controller('queue')
@@ -19,40 +23,70 @@ export class QueueController {
 
   @ApiOperation({ summary: 'Create a queue' })
   @Post()
-  create(@Body() createQueueDto: CreateQueueDto) {
+  async create(@Body() createQueueDto: CreateQueueDto) {
     return this.queueService.create(createQueueDto);
   }
 
   @ApiOperation({ summary: 'Get all queue' })
   @Get()
-  findAll() {
+  async findAll() {
     return this.queueService.findAll();
   }
 
   @ApiOperation({ summary: 'Get all queue' })
   @Get('today/:doctor_id')
-  findAllToday(@Param('doctor_id') doctor_id: number) {
+  async findAllToday(@Param('doctor_id') doctor_id: number) {
     return this.queueService.findAllToday(+doctor_id);
   }
 
   @ApiOperation({ summary: 'Get queue' })
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  async findOne(@Param('id') id: number) {
     return this.queueService.findOne(+id);
   }
 
   @ApiOperation({ summary: 'Update queue' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        image: {
+          type: 'string',
+          format: 'binary',
+          description: 'Image file to upload',
+        },
+        name: {
+          type: 'string',
+          example: 'ShifoMed',
+          description: 'The name of the Clinic',
+        },
+        address: {
+          type: 'string',
+          example: 'Yunusobod, Toshkent',
+          description: 'The address of the Clinic',
+        },
+        phone: {
+          type: 'string',
+          example: '+998991234657',
+          description: 'The phone number of the Clinic',
+        },
+      },
+    },
+  })
   @Patch(':id')
+  @UseInterceptors(FileInterceptor('image'))
   async update(
     @Param('id') id: number,
     @Body() updateQueueDto: UpdateQueueDto,
+    @UploadedFile(new ImageValidationPipe()) image: Express.Multer.File,
   ) {
-    return await this.queueService.update(+id, updateQueueDto);
+    return this.queueService.update(+id, updateQueueDto, image);
   }
 
   @ApiOperation({ summary: 'Delete queue' })
   @Delete(':id')
-  async delete(@Param('id') id: number): Promise<number> {
-    return await this.queueService.delete(id);
+  async delete(@Param('id') id: number) {
+    return this.queueService.delete(id);
   }
 }

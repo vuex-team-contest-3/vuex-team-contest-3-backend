@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString, IsBoolean, IsNumber } from 'class-validator';
+import {
+  IsOptional,
+  IsString,
+  IsBoolean,
+  IsNumber,
+  IsBooleanString,
+  IsNumberString,
+} from 'class-validator';
 
 export class UpdateQueueDto {
   @ApiProperty({
@@ -7,7 +14,7 @@ export class UpdateQueueDto {
     description: 'The status of the Queue',
   })
   @IsOptional()
-  @IsBoolean()
+  @IsBooleanString()
   is_active?: boolean;
 
   @ApiProperty({
@@ -47,7 +54,7 @@ export class UpdateQueueDto {
     description: 'The diagnosis ID of the Queue',
   })
   @IsOptional()
-  @IsNumber()
+  @IsNumberString()
   diagnosis_id?: number;
 
   createdAt?: string;
