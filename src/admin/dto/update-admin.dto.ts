@@ -3,7 +3,7 @@ import { IsOptional, IsString } from 'class-validator';
 
 export class UpdateAdminDto {
   @ApiProperty({
-    example: 'john77',
+    example: 'clinic',
     description: 'The login of the Admin',
   })
   @IsOptional()
@@ -11,7 +11,7 @@ export class UpdateAdminDto {
   login?: string;
 
   @ApiProperty({
-    example: 'Uzbek1&t0n',
+    example: 'admin',
     description: 'The password of the Admin',
   })
   @IsOptional()

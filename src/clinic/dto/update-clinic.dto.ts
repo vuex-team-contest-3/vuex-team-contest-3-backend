@@ -11,7 +11,7 @@ export class UpdateClinicDto {
   name?: string;
 
   @ApiProperty({
-    example: 'Tashkent, Yunusobod',
+    example: 'Yunusobod, Toshkent',
     description: 'The address of the Clinic',
   })
   @IsNotEmpty()

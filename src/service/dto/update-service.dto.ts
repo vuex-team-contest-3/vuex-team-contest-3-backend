@@ -1,6 +1,28 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { IsOptional, IsString } from 'class-validator';
+
 export class UpdateServiceDto {
+  @ApiProperty({
+    example: 'Stomotolog',
+    description: 'The name of the Service',
+  })
+  @IsOptional()
+  @IsString()
   name?: string;
-	price?: string;
-	clinic_id?: number;
-	
+
+  @ApiProperty({
+    example: '$50',
+    description: 'The price of the Service',
+  })
+  @IsOptional()
+  @IsString()
+  price?: string;
+
+  @ApiProperty({
+    example: 1,
+    description: 'The clinic ID of the Service',
+  })
+  @IsOptional()
+  @IsString()
+  clinic_id?: number;
 }
