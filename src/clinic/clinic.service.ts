@@ -11,6 +11,7 @@ import { UpdateClinicDto } from './dto/update-clinic.dto';
 import { Service } from '../service/models/service.model';
 import { Doctor } from '../doctor/models/doctor.model';
 import { ImageService } from '../image/image.service';
+import { Diagnosis } from '../diagnosis/models/diagnosis.model';
 
 @Injectable()
 export class ClinicService {
@@ -42,6 +43,12 @@ export class ClinicService {
         {
           model: Service,
           attributes: ['id', 'name', 'price'],
+          include: [
+            {
+              model: Diagnosis,
+              attributes: ['id', 'name'],
+            },
+          ],
         },
         {
           model: Doctor,
@@ -114,6 +121,12 @@ export class ClinicService {
           {
             model: Service,
             attributes: ['id', 'name', 'price'],
+            include: [
+              {
+                model: Diagnosis,
+                attributes: ['id', 'name'],
+              },
+            ],
           },
           {
             model: Doctor,
@@ -151,6 +164,12 @@ export class ClinicService {
           {
             model: Service,
             attributes: ['id', 'name', 'price'],
+            include: [
+              {
+                model: Diagnosis,
+                attributes: ['id', 'name'],
+              },
+            ],
           },
           {
             model: Doctor,

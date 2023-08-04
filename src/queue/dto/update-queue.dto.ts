@@ -1,11 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsOptional,
-  IsString,
-  IsBoolean,
-  IsNumber,
   IsBooleanString,
   IsNumberString,
+  IsDateString,
 } from 'class-validator';
 
 export class UpdateQueueDto {
@@ -22,7 +20,7 @@ export class UpdateQueueDto {
     description: 'The started time of the Queue',
   })
   @IsOptional()
-  @IsString()
+  @IsDateString()
   started_at?: string;
 
   @ApiProperty({
@@ -30,7 +28,7 @@ export class UpdateQueueDto {
     description: 'The finished time of the Queue',
   })
   @IsOptional()
-  @IsString()
+  @IsDateString()
   finished_at?: string;
 
   // @ApiProperty({
