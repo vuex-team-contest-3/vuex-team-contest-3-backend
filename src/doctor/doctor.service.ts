@@ -32,8 +32,7 @@ export class DoctorService {
     try {
       const { login, password } = loginDoctorDto;
       const doctorByPhone = await this.getDoctorByPhone(password);
-      console.log(doctorByPhone, password);
-      
+
       if (!doctorByPhone) {
         throw new UnauthorizedException('Login or password is wrong');
       }

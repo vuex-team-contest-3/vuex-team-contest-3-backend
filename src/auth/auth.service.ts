@@ -48,16 +48,17 @@ export class AuthService {
 
   async doctorLogin(loginDoctorDto: LoginDoctorDto) {
     const { login, password } = loginDoctorDto;
-    const doctorByLogin = await this.doctorService.getDoctorByLogin(login);
-    if (!doctorByLogin) {
+    const doctorByPhone = await this.doctorService.getDoctorByPhone(password);
+
+    if (!doctorByPhone) {
       throw new UnauthorizedException('Login or password is wrong');
     }
-    const isMatchPass = await compare(password, doctorByLogin.phone);
-    if (!isMatchPass) {
+
+    if (doctorByPhone.clinic.id != login) {
       throw new UnauthorizedException('Login or password is wrong');
     }
-    const token = await this.doctorService.getToken(doctorByLogin);
-    const doctor = await this.doctorService.getOne(doctorByLogin.id);
+    const token = await this.doctorService.getToken(doctorByPhone);
+    const doctor = await this.doctorService.getOne(doctorByPhone.id);
     const response = {
       msg: 'DOCTOR LOGGED',
       token,
