@@ -38,7 +38,7 @@ export class UpdateQueueDto {
   //   description: 'The client ID of the Queue',
   // })
   // @IsOptional()
-  // @IsNumber()
+  // @IsNumberString()
   // client_id?: number;
 
   // @ApiProperty({
@@ -46,7 +46,7 @@ export class UpdateQueueDto {
   //   description: 'The doctor ID of the Queue',
   // })
   // @IsOptional()
-  // @IsNumber()
+  // @IsNumberString()
   // doctor_id?: number;
 
   @ApiProperty({

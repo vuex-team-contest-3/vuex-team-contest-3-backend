@@ -22,13 +22,39 @@ export class ServiceService {
   }
 
   async findAll() {
-    return await this.serviceRepo.findAll({
-      include: { all: true, nested: true },
+    return this.serviceRepo.findAll({
+      attributes: ['id', 'name', 'price'],
+      include: [
+        {
+          model: Clinic,
+          attributes: ['id', 'name', 'address', 'phone', 'image_name'],
+        },
+        {
+          model: Diagnosis,
+          attributes: ['id', 'name'],
+        },
+        {
+          model: Doctor,
+          attributes: [
+            'id',
+            'first_name',
+            'last_name',
+            'phone',
+            'profession',
+            'experience',
+            'work_time',
+            'work_day',
+            'floor',
+            'room',
+            'image_name',
+          ],
+        },
+      ],
     });
   }
 
   async findOne(id: number) {
-    return await this.serviceRepo.findByPk(id);
+    return this.getOne(id);
   }
 
   async update(id: number, updateServiceDto: UpdateServiceDto) {
