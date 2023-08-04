@@ -93,4 +93,16 @@ export class AuthService {
     });
     return { token: accessToken };
   }
+
+  async verifyToken(authHeader: string) {
+    try {
+      const token = authHeader;
+      const user = await this.jwtService.verify(token, {
+        secret: process.env.TOKEN_KEY,
+      });
+      return user;
+    } catch (error) {
+      throw new UnauthorizedException('Invalid token');
+    }
+  }
 }
