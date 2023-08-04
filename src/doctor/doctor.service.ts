@@ -16,8 +16,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ImageService } from '../image/image.service';
 import { ClinicService } from './../clinic/clinic.service';
 import { ServiceService } from './../service/service.service';
-import { Queue } from '../queue/models/queue.model';
-import { Op } from 'sequelize';
+import { QueueService } from './../queue/queue.service';
 
 @Injectable()
 export class DoctorService {
@@ -143,20 +142,7 @@ export class DoctorService {
   }
 
   async getOne(id: number) {
-    const currentDate = new Date();
-    const startOfDay = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate(),
-    );
-    const endOfDay = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate() + 1,
-    );
-
     const doctor = await this.doctorRepo.findOne({
-      order: [[{ model: Queue, as: 'queue' }, 'createdAt', 'ASC']],
       where: { id },
       attributes: [
         'id',
@@ -179,24 +165,6 @@ export class DoctorService {
         {
           model: Clinic,
           attributes: ['id', 'name', 'address', 'phone', 'image_name'],
-        },
-        {
-          model: Queue,
-          where: {
-            doctor_id: id,
-            createdAt: {
-              [Op.gte]: startOfDay,
-              [Op.lt]: endOfDay,
-            },
-          },
-          attributes: [
-            'id',
-            'is_active',
-            'started_at',
-            'finished_at',
-            'image_name',
-            'createdAt',
-          ],
         },
       ],
     });
