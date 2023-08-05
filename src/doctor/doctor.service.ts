@@ -81,6 +81,7 @@ export class DoctorService {
         'floor',
         'room',
         'image_name',
+        'createdAt',
       ],
       include: [
         {
@@ -156,6 +157,7 @@ export class DoctorService {
         'floor',
         'room',
         'image_name',
+        'createdAt',
       ],
       include: [
         {
