@@ -1,12 +1,10 @@
 import {
-  HttpException,
-  HttpStatus,
+  BadRequestException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
-import { LoginDto } from './dto/login-user.dto';
 import { Response } from 'express';
 import { AdminService } from '../admin/admin.service';
 import { CreateClientDto } from '../client/dto/create-client.dto';
@@ -14,6 +12,7 @@ import { ClientService } from '../client/client.service';
 import { DoctorService } from '../doctor/doctor.service';
 import { LoginAdminDto } from '../admin/dto/login-admin.dto';
 import { LoginDoctorDto } from '../doctor/dto/login-doctor.dto';
+import { LoginClientDto } from '../client/dto/login-client.dto';
 
 @Injectable()
 export class AuthService {
@@ -65,32 +64,29 @@ export class AuthService {
     return response;
   }
 
-  async userRegister(createClientDto: CreateClientDto, res: Response) {
-    const user = await this.clientService.create(createClientDto);
-    const { token } = await this.getToken(user.id, 'USER');
-    return { msg: 'USER REGISTERED', user, token };
+  async userRegister(createClientDto: CreateClientDto) {
+    return this.clientService.create(createClientDto);
   }
 
-  async userLogin(loginDto: LoginDto, res: Response) {
-    const { login, password } = loginDto;
-    const user = await this.clientService.getClientByLogin(login);
-    if (!user || user.phone != password) {
-      throw new HttpException(
-        `Bunday foydalanuvchi mavjud emas`,
-        HttpStatus.BAD_REQUEST,
-      );
+  async userLogin(loginClientDto: LoginClientDto) {
+    const { login, password } = loginClientDto;
+    const clientByPhone = await this.clientService.getClientByPhone(password);
+
+    if (!clientByPhone) {
+      throw new UnauthorizedException('Login or password is wrong');
     }
-    const { token } = await this.getToken(user.id, 'USER');
-    return { msg: 'USER LOGGED', user, token };
-  }
 
-  async getToken(id: any, role: string) {
-    const payload = { id: id, role: role };
-    const accessToken = this.jwtService.signAsync(payload, {
-      secret: process.env.TOKEN_KEY,
-      expiresIn: process.env.TOKEN_TIME,
-    });
-    return { token: accessToken };
+    if (clientByPhone.first_name != login) {
+      throw new UnauthorizedException('Login or password is wrong');
+    }
+    const token = await this.clientService.getToken(clientByPhone);
+    const client = await this.clientService.getOne(clientByPhone.id);
+    const response = {
+      msg: 'CLIENT LOGGED',
+      token,
+      user: client,
+    };
+    return response;
   }
 
   async verifyToken(authHeader: string) {
