@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Queue } from './models/queue.model';
 import { CreateQueueDto } from './dto/create-queue.dto';
@@ -25,6 +30,8 @@ export class QueueService {
   async create(createQueueDto: CreateQueueDto) {
     await this.clientService.getOne(createQueueDto.client_id);
     await this.doctorService.getOne(createQueueDto.doctor_id);
+
+    await this.checkClient(createQueueDto);
 
     const queue = await this.queueRepo.create({
       is_active: true,
@@ -194,6 +201,24 @@ export class QueueService {
     });
     if (!queue) {
       throw new HttpException('Queue not found', HttpStatus.NOT_FOUND);
+    }
+    return queue;
+  }
+
+  async checkClient(createQueueDto: CreateQueueDto) {
+    const queue = await this.queueRepo.findOne({
+      where: { ...createQueueDto, is_active: true },
+      attributes: [
+        'id',
+        'is_active',
+        'started_at',
+        'finished_at',
+        'image_name',
+        'createdAt',
+      ],
+    });
+    if (queue) {
+      throw new BadRequestException('Queue taken before!');
     }
     return queue;
   }
