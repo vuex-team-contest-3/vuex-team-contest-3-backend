@@ -238,7 +238,33 @@ export class QueueService {
         'image_name',
         'createdAt',
       ],
+      include: [
+        {
+          model: Client,
+          attributes: ['id', 'first_name', 'last_name', 'age', 'phone'],
+        },
+        {
+          model: Diagnosis,
+          attributes: ['id', 'name'],
+        },
+        {
+          model: Doctor,
+          attributes: [
+            'id',
+            'first_name',
+            'last_name',
+            'phone',
+            'profession',
+            'experience',
+            'work_time',
+            'work_day',
+            'floor',
+            'room',
+            'image_name',
+          ],
+        },
+      ],
     });
-    return queue ? true : false;
+    return queue ? queue : false;
   }
 }
