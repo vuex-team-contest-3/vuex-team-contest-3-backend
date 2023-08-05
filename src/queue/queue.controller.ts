@@ -33,10 +33,19 @@ export class QueueController {
     return this.queueService.findAll();
   }
 
-  @ApiOperation({ summary: 'Get all queue' })
+  @ApiOperation({ summary: 'Get all queue today' })
   @Get('today/:doctor_id')
   async findAllToday(@Param('doctor_id') doctor_id: number) {
     return this.queueService.findAllToday(+doctor_id);
+  }
+
+  @ApiOperation({ summary: 'Get all queue by day' })
+  @Get('day/:doctor_id/:date')
+  async findAllByDate(
+    @Param('doctor_id') doctor_id: number,
+    @Param('date') date: string,
+  ) {
+    return this.queueService.findAllByDate(+doctor_id, date);
   }
 
   @ApiOperation({ summary: 'Get queue' })

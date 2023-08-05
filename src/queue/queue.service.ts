@@ -125,6 +125,49 @@ export class QueueService {
     });
   }
 
+  async findAllByDate(doctor_id: number, date: string) {
+    const currentDate = new Date(date);
+    const startOfDay = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate(),
+    );
+    const endOfDay = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate() + 1,
+    );
+
+    return this.queueRepo.findAll({
+      order: [['createdAt', 'ASC']],
+      where: {
+        doctor_id,
+        createdAt: {
+          [Op.gte]: startOfDay,
+          [Op.lt]: endOfDay,
+        },
+      },
+      attributes: [
+        'id',
+        'is_active',
+        'started_at',
+        'finished_at',
+        'image_name',
+        'createdAt',
+      ],
+      include: [
+        {
+          model: Client,
+          attributes: ['id', 'first_name', 'last_name', 'age', 'phone'],
+        },
+        {
+          model: Diagnosis,
+          attributes: ['id', 'name'],
+        },
+      ],
+    });
+  }
+
   async findOne(id: number) {
     return this.getOne(id);
   }
