@@ -157,11 +157,19 @@ export class QueueService {
 
   async delete(id: number) {
     const queue = await this.getOne(id);
-    await this.queueRepo.destroy({ where: { id } });
-    if (queue.image_name) {
-      await this.imageService.remove(queue.image_name);
+    if (
+      queue.is_active == true &&
+      queue.started_at == null &&
+      queue.finished_at == null
+    ) {
+      await this.queueRepo.destroy({ where: { id } });
+      if (queue.image_name) {
+        await this.imageService.remove(queue.image_name);
+      }
+      return queue;
+    } else {
+      throw new BadRequestException('Queue is used!');
     }
-    return queue;
   }
 
   async getOne(id: number) {
