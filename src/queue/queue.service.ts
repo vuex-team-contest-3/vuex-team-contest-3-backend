@@ -239,6 +239,6 @@ export class QueueService {
         'createdAt',
       ],
     });
-    return queue;
+    return queue ? true : false;
   }
 }
