@@ -71,20 +71,25 @@ export class QueueController {
           format: 'binary',
           description: 'Image file to upload',
         },
-        name: {
-          type: 'string',
-          example: 'ShifoMed',
-          description: 'The name of the Clinic',
+        is_active: {
+          type: 'boolean',
+          example: false,
+          description: 'The status of the Queu',
         },
-        address: {
+        started_at: {
           type: 'string',
-          example: 'Yunusobod, Toshkent',
-          description: 'The address of the Clinic',
+          example: '2023-08-03T10:14:40.492Z',
+          description: 'The started time of the Queue',
         },
-        phone: {
+        finished_at: {
           type: 'string',
-          example: '+998991234657',
-          description: 'The phone number of the Clinic',
+          example: '2023-08-03T10:14:50.492Z',
+          description: 'The finished time of the Queue',
+        },
+        diagnosis_id: {
+          type: 'number',
+          example: 1,
+          description: 'The diagnosis of the Queue',
         },
       },
     },

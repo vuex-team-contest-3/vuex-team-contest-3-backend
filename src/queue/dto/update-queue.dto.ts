@@ -16,7 +16,7 @@ export class UpdateQueueDto {
   is_active?: boolean;
 
   @ApiProperty({
-    example: '30 min',
+    example: '2023-08-03T10:14:40.492Z',
     description: 'The started time of the Queue',
   })
   @IsOptional()
@@ -24,7 +24,7 @@ export class UpdateQueueDto {
   started_at?: string;
 
   @ApiProperty({
-    example: '30 min',
+    example: '2023-08-03T10:14:50.492Z',
     description: 'The finished time of the Queue',
   })
   @IsOptional()
