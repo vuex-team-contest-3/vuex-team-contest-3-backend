@@ -18,10 +18,10 @@ import { LoginClientDto } from './dto/login-client.dto';
 export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
-  @ApiOperation({ summary: 'Login Clint' })
+  @ApiOperation({ summary: 'Login Client' })
   @Post('signin')
-  async login(@Body() loginClintDto: LoginClientDto) {
-    return this.clientService.login(loginClintDto);
+  async login(@Body() loginClientDto: LoginClientDto) {
+    return this.clientService.login(loginClientDto);
   }
 
   @ApiOperation({ summary: 'Create a client' })

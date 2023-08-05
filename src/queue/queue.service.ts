@@ -31,7 +31,10 @@ export class QueueService {
     await this.clientService.getOne(createQueueDto.client_id);
     await this.doctorService.getOne(createQueueDto.doctor_id);
 
-    await this.checkClient(createQueueDto);
+    const checkClient = await this.checkClient(createQueueDto);
+    if (checkClient) {
+      throw new BadRequestException('Queue taken before!');
+    }
 
     const queue = await this.queueRepo.create({
       is_active: true,
@@ -236,9 +239,6 @@ export class QueueService {
         'createdAt',
       ],
     });
-    if (queue) {
-      throw new BadRequestException('Queue taken before!');
-    }
     return queue;
   }
 }

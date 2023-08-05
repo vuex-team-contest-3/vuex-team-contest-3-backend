@@ -45,6 +45,12 @@ export class QueueController {
     return this.queueService.findOne(+id);
   }
 
+  @ApiOperation({ summary: 'Check client' })
+  @Post('check')
+  async checkClient(@Body() createQueueDto: CreateQueueDto) {
+    return this.queueService.checkClient(createQueueDto);
+  }
+
   @ApiOperation({ summary: 'Update queue' })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
