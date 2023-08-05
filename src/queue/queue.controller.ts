@@ -40,7 +40,7 @@ export class QueueController {
   }
 
   @ApiOperation({ summary: 'Get all queue by day' })
-  @Get('day/:doctor_id/:date')
+  @Get('date/:doctor_id/:date')
   async findAllByDate(
     @Param('doctor_id') doctor_id: number,
     @Param('date') date: string,
