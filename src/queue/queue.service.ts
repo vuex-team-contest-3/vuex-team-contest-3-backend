@@ -206,8 +206,27 @@ export class QueueService {
   }
 
   async checkClient(createQueueDto: CreateQueueDto) {
+    const currentDate = new Date();
+    const startOfDay = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate(),
+    );
+    const endOfDay = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate() + 1,
+    );
+
     const queue = await this.queueRepo.findOne({
-      where: { ...createQueueDto, is_active: true },
+      where: {
+        ...createQueueDto,
+        is_active: true,
+        createdAt: {
+          [Op.gte]: startOfDay,
+          [Op.lt]: endOfDay,
+        },
+      },
       attributes: [
         'id',
         'is_active',
